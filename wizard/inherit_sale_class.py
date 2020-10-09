@@ -42,8 +42,8 @@ class Custom_Sale(models.TransientModel):
                     header_list.append(value)
                 else:
                     _logger.info('-----row number %s', key)
-                    internal_reference = str(value[0]).strip() or False
-                    pdf_url = str(value[1]).strip() or False
+                    internal_reference = value[0].strip() or False
+                    pdf_url = value[1].strip() or False
                     # name = value[1].strip() or False
                     # # uom = value[2].strip() or False
                     # # uom_value = value[3].strip() or False
