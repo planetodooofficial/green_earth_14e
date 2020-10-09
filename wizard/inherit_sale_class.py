@@ -43,15 +43,15 @@ class Custom_Sale(models.TransientModel):
                 else:
                     _logger.info('-----row number %s', key)
                     internal_reference = value[0].strip() or False
-                    name = value[1].strip() or False
-                    # uom = value[2].strip() or False
-                    # uom_value = value[3].strip() or False
-                    public_price = value[2].strip() or False
-                    cost = value[3].strip() or False
-                    product_type = value[4].strip() or False
-                    product_category = value[5].strip() or False
-                    description = value[6].strip() or False
-                    pdf_url = value[7].strip() or False
+                    pdf_url = value[1].strip() or False
+                    # name = value[1].strip() or False
+                    # # uom = value[2].strip() or False
+                    # # uom_value = value[3].strip() or False
+                    # public_price = value[2].strip() or False
+                    # cost = value[3].strip() or False
+                    # product_type = value[4].strip() or False
+                    # product_category = value[5].strip() or False
+                    # description = value[6].strip() or False
 
                     # project_obj = self.env['product.product'].search([('name', '=', project)])
                     #
