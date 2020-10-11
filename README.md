@@ -11,3 +11,5 @@ How to use this module
 | --------------------| ----------------------------------------- |
 |  F1001              |Google drive link of this product's image  |
 |  F1002              | Google drive link of this product's image |
+
+Please Note: Product of the image should be available on  google drive or link of the image should be end with the image extension like .jpg or .jpeg
