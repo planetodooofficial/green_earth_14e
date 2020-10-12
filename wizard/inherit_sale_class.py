@@ -44,6 +44,7 @@ class Custom_Sale(models.TransientModel):
                     _logger.info('-----row number %s', key)
                     internal_reference = value[0].strip() or False
                     pdf_url = value[1].strip() or False
+                    _logger.info('-----inside else-------- %s', internal_reference,pdf_url)
                     # name = value[1].strip() or False
                     # # uom = value[2].strip() or False
                     # # uom_value = value[3].strip() or False
@@ -70,6 +71,7 @@ class Custom_Sale(models.TransientModel):
                             request = req.Request(pdf_url, headers={'User-Agent': "odoo"})
                             binary = req.urlopen(request)
                             pdf = base64.b64encode(binary.read())
+                            _logger.info('-----inside try-------- %s', pdf)
                         except Exception as e:
                             raise UserError(e)
                         # project = self.env['project.product'].search([('id', '=', 522)])
@@ -99,7 +101,8 @@ class Custom_Sale(models.TransientModel):
                             # 'description': description,
 
                         }
-                    new_apartment_id = matched_id.sudo().write(apartment_vals)
+                    if matched_id:
+                        new_apartment_id = matched_id.sudo().write(apartment_vals)
 
             except Exception as e:
                 _logger.error('------------Error Exception---------- %s', e)
