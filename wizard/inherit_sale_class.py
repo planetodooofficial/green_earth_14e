@@ -63,7 +63,7 @@ class Custom_Sale(models.TransientModel):
                     # elif not apartment_obj:
                         # url = 'http://www.hrecos.org//images/Data/forweb/HRTVBSH.Metadata.pdf'
                     matched_id = self.env['product.template'].search([('default_code', '=', internal_reference)])
-                    if pdf_url:
+                    if "http://" in pdf_url or "https://" in pdf_url:
                         try:
                             if pdf_url.__contains__('drive.google.com'):
                                 pdf_url = re.sub("/file/d/", "/uc?export=download&id=", pdf_url)
@@ -89,6 +89,8 @@ class Custom_Sale(models.TransientModel):
                             'image_1920': pdf or False,
                         }
                     else:
+                        with open(pdf_url, 'rb') as image:
+                            pdf = base64.b64encode(image.read())
                         apartment_vals = {
                             # 'default_code': internal_reference,
                             # 'name': name,
@@ -99,6 +101,7 @@ class Custom_Sale(models.TransientModel):
                             # 'type': product_type.id,
                             # 'categ_i d': product_category.id,
                             # 'description': description,
+                            'image_1920': pdf or False,
 
                         }
                     if matched_id:
