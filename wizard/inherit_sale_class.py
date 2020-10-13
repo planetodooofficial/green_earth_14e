@@ -10,6 +10,7 @@ import io
 import urllib.request as req
 import logging
 
+
 _logger = logging.getLogger(__name__)
 
 
@@ -63,7 +64,7 @@ class Custom_Sale(models.TransientModel):
                     # elif not apartment_obj:
                         # url = 'http://www.hrecos.org//images/Data/forweb/HRTVBSH.Metadata.pdf'
                     matched_id = self.env['product.template'].search([('default_code', '=', internal_reference)])
-                    if "http://" in pdf_url or "https://" in pdf_url:
+                    if "http://" in pdf_url or "https://" in pdf_url and matched_id:
                         try:
                             if pdf_url.__contains__('drive.google.com'):
                                 pdf_url = re.sub("/file/d/", "/uc?export=download&id=", pdf_url)
@@ -71,7 +72,7 @@ class Custom_Sale(models.TransientModel):
                             request = req.Request(pdf_url, headers={'User-Agent': "odoo"})
                             binary = req.urlopen(request)
                             pdf = base64.b64encode(binary.read())
-                            _logger.info('-----inside try-------- %s', pdf)
+                            _logger.info('-----inside try-------- %s')
                         except Exception as e:
                             raise UserError(e)
                         # project = self.env['project.product'].search([('id', '=', 522)])
@@ -88,7 +89,7 @@ class Custom_Sale(models.TransientModel):
                             # 'description': description,
                             'image_1920': pdf or False,
                         }
-                    else:
+                    elif matched_id:
                         with open(pdf_url, 'rb') as image:
                             pdf = base64.b64encode(image.read())
                         apartment_vals = {
@@ -104,11 +105,19 @@ class Custom_Sale(models.TransientModel):
                             'image_1920': pdf or False,
 
                         }
-                    if matched_id:
+
                         new_apartment_id = matched_id.sudo().write(apartment_vals)
+
+                    else:
+                        raise UserError(_('Internal reference  % s is not available in the system', internal_reference))
 
             except Exception as e:
                 _logger.error('------------Error Exception---------- %s', e)
                 error_list.append(value)
+                if 'not enough arguments for format string' in e.args:
+                    raise UserError(_('Internal reference %s is not available in the system', value[0].strip()))
+                else:
+                    raise UserError(
+                        _('Please provide correct URL for product  or check your image size.!'))
 
 

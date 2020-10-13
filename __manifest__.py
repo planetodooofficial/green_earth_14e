@@ -11,9 +11,9 @@
         'wizard/inherit_sale_view.xml',
       ],
     'license': 'LGPL-3',
-    # 'price': "50.87",
-    # 'images': ["static/description/planeicon.png"],
-    # 'currency': "USD",
+    'price': "40.87",
+    'images': ["static/description/planeicon.png"],
+    'currency': "USD",
     'installable': True,
     'auto_install': False,
 }
